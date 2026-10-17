@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Task, Project, Note, ActivePage } from '../../types';
+import { Task, Project, Note, ActivePage, UserSettings } from '../../types';
 
 interface HomeViewProps {
   tasks: Task[];
@@ -10,6 +10,7 @@ interface HomeViewProps {
   onSelectTask: (task: Task) => void;
   onNavigate: (page: ActivePage) => void;
   onSaveQuickNote: (title: string, content: string) => void;
+  settings?: UserSettings;
 }
 
 export const HomeView: React.FC<HomeViewProps> = ({
@@ -21,6 +22,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
   onSelectTask,
   onNavigate,
   onSaveQuickNote,
+  settings,
 }) => {
   const [quickNoteText, setQuickNoteText] = useState('');
   const [quickNoteSaved, setQuickNoteSaved] = useState(false);
@@ -80,9 +82,27 @@ export const HomeView: React.FC<HomeViewProps> = ({
             {formattedToday}
           </span>
           <h2 className="text-[24px] sm:text-[28px] font-bold text-[#292820] tracking-tight mt-0.5">
-            Good morning, Alex!
+            {new Date().getHours() < 12
+              ? 'Good morning'
+              : new Date().getHours() < 18
+              ? 'Good afternoon'
+              : 'Good evening'}
+            , {settings?.displayName || 'Alex'}!
           </h2>
-          <p className="text-sm text-[#77766F] mt-1">
+          <div className="flex items-center gap-2 mt-1.5 flex-wrap">
+            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-[#F0EBE2] text-[#65513B] font-mono text-xs font-bold border border-[#E8E4DC]">
+              <span className="material-symbols-outlined text-[14px]">badge</span>
+              Main ID: {settings?.mainId || 'DEV-8492'}
+            </span>
+            <span className="text-xs text-[#77766F] font-medium">
+              {settings?.role || 'DevOps Engineer'}
+            </span>
+            <span className="text-xs text-[#77766F] hidden sm:inline">•</span>
+            <span className="text-xs text-[#77766F] hidden sm:inline">
+              {settings?.email || 'alex.chen@devopsforge.local'}
+            </span>
+          </div>
+          <p className="text-sm text-[#77766F] mt-2">
             Let's make today productive. You have{' '}
             <strong className="text-[#292820] font-semibold">
               {todayPending.length} task{todayPending.length === 1 ? '' : 's'}

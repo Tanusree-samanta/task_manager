@@ -227,6 +227,9 @@ export const api = {
     saveToStorage(KEYS.NOTIFICATIONS, notifs),
 
   // Settings
-  getSettings: (): UserSettings => loadFromStorage(KEYS.SETTINGS, DEFAULT_SETTINGS),
+  getSettings: (): UserSettings => {
+    const loaded = loadFromStorage<Partial<UserSettings>>(KEYS.SETTINGS, DEFAULT_SETTINGS);
+    return { ...DEFAULT_SETTINGS, ...loaded };
+  },
   saveSettings: (settings: UserSettings): void => saveToStorage(KEYS.SETTINGS, settings),
 };

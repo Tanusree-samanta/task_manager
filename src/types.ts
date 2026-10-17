@@ -94,7 +94,12 @@ export interface UserSettings {
   defaultSort: 'due' | 'priority' | 'title' | 'recent';
   weekStart: 'monday' | 'sunday';
   displayName: string;
+  mainId: string;
   email: string;
+  role: string;
+  avatarUrl?: string;
   reminderEnabled: boolean;
   compactSidebar: boolean;
+  autoArchiveCompleted: boolean;
 }
+

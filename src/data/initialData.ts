@@ -394,7 +394,13 @@ export const DEFAULT_SETTINGS: UserSettings = {
   defaultSort: 'due',
   weekStart: 'monday',
   displayName: 'Alex Chen',
+  mainId: 'DEV-8492',
   email: 'alex.chen@devopsforge.local',
+  role: 'DevOps Engineer',
+  avatarUrl:
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuA2H6KEE66mBB8Mudcms7Ug968C2LxcEzprXX3DrETOfPmeS8BXdqoiCMhANL4qnEbpVxvPCUe_TV684tS_hv3CnfCsjbXZDJRG-arZIKiyYPjZhCP2O20ED3Cl848Y74QLQ9G5DFAi-foTjSEvyzyh_m429BXptTebtybghKw18WyI4HUELnmxQqRR-U6kQEssPwRjfkDLtYT3RcoluvXd0CpR3yJBXr09aanhigR12D_W72rpcDYb',
   reminderEnabled: true,
   compactSidebar: false,
+  autoArchiveCompleted: false,
 };
+
