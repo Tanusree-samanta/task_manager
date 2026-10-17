@@ -74,3 +74,53 @@
 .shadow-modal {
   box-shadow: 0 20px 25px -5px rgba(41, 40, 32, 0.1), 0 10px 10px -5px rgba(41, 40, 32, 0.04);
 }
+
+
+/* Functional dark theme for components using the app's existing utility classes. */
+html[data-theme="dark"] body,
+html[data-theme="dark"] #root {
+  background-color: #191916 !important;
+  color: #f5f1e9 !important;
+}
+
+html[data-theme="dark"] body [class~="bg-white"],
+html[data-theme="dark"] body [class*="bg-[#FFFFFF]"] {
+  background-color: #252521 !important;
+}
+
+html[data-theme="dark"] body [class*="bg-[#F7F5F0]"],
+html[data-theme="dark"] body [class*="bg-[#FDFCFB]"],
+html[data-theme="dark"] body [class*="bg-[#FAF8F5]"] {
+  background-color: #1e1e1a !important;
+}
+
+html[data-theme="dark"] body [class*="bg-[#F0EBE2]"] {
+  background-color: #39352e !important;
+}
+
+html[data-theme="dark"] body [class*="text-[#292820]"] {
+  color: #f5f1e9 !important;
+}
+
+html[data-theme="dark"] body [class*="text-[#77766F]"] {
+  color: #c2bbaf !important;
+}
+
+html[data-theme="dark"] body [class*="text-[#65513B]"] {
+  color: #d9bd96 !important;
+}
+
+html[data-theme="dark"] body [class*="border-[#E8E4DC]"] {
+  border-color: #47443d !important;
+}
+
+html[data-theme="dark"] body input,
+html[data-theme="dark"] body select,
+html[data-theme="dark"] body textarea {
+  color: #f5f1e9;
+}
+
+html[data-theme="dark"] body input::placeholder,
+html[data-theme="dark"] body textarea::placeholder {
+  color: #a9a293;
+}

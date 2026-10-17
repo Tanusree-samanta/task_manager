@@ -3,6 +3,7 @@ import { Task } from '../../types';
 
 interface CalendarViewProps {
   tasks: Task[];
+  weekStart: 'monday' | 'sunday';
   onSelectTask: (task: Task) => void;
   onOpenTaskModalWithDate: (date: string) => void;
 }
@@ -11,6 +12,7 @@ type CalendarMode = 'month' | 'week' | 'agenda';
 
 export const CalendarView: React.FC<CalendarViewProps> = ({
   tasks,
+  weekStart,
   onSelectTask,
   onOpenTaskModalWithDate,
 }) => {
@@ -25,7 +27,9 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
     'July', 'August', 'September', 'October', 'November', 'December',
   ];
 
-  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const daysOfWeek = weekStart === 'monday'
+    ? ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    : ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
   // Navigate
   const handlePrev = () => {
@@ -41,7 +45,10 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
   };
 
   // Get days in month grid
-  const firstDayIndex = new Date(year, month, 1).getDay();
+  const calendarFirstDay = new Date(year, month, 1).getDay();
+  const firstDayIndex = weekStart === 'monday'
+    ? (calendarFirstDay + 6) % 7
+    : calendarFirstDay;
   const totalDaysInMonth = new Date(year, month + 1, 0).getDate();
   const totalDaysInPrevMonth = new Date(year, month, 0).getDate();
 

@@ -100,6 +100,23 @@ export default function App() {
   useEffect(() => api.saveNotifications(notifications), [notifications]);
   useEffect(() => api.saveSettings(settings), [settings]);
 
+  // Apply the selected theme globally; System follows the operating system preference.
+  useEffect(() => {
+    const colorScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    const applyTheme = () => {
+      const theme = settings.theme === 'system'
+        ? (colorScheme.matches ? 'dark' : 'light')
+        : settings.theme;
+      document.documentElement.dataset.theme = theme;
+    };
+
+    applyTheme();
+    if (settings.theme !== 'system') return;
+
+    colorScheme.addEventListener('change', applyTheme);
+    return () => colorScheme.removeEventListener('change', applyTheme);
+  }, [settings.theme]);
+
   // Global keyboard shortcut: Cmd+K / Ctrl+K
   useEffect(() => {
     const handleGlobalKey = (e: KeyboardEvent) => {
@@ -419,6 +436,7 @@ export default function App() {
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
         tasks={tasks}
+        settings={settings}
         isMobileOpen={isMobileSidebarOpen}
         onCloseMobile={() => setIsMobileSidebarOpen(false)}
         isCollapsed={isSidebarCollapsed}
@@ -442,6 +460,7 @@ export default function App() {
           setIsTaskModalOpen(true);
         }}
         notifications={notifications}
+        settings={settings}
         onOpenNotifications={() => setIsNotificationsOpen(true)}
         onNavigate={(page) => setActivePage(page)}
         isSidebarCollapsed={isSidebarCollapsed}
@@ -476,6 +495,8 @@ export default function App() {
             <MyTasksView
               tasks={tasks}
               projects={projects}
+              defaultView={settings.defaultTaskView}
+              defaultSort={settings.defaultSort}
               onToggleTask={handleToggleTask}
               onOpenTaskModal={() => {
                 setEditingTask(null);
@@ -519,6 +540,7 @@ export default function App() {
           {activePage === 'calendar' && (
             <CalendarView
               tasks={tasks}
+              weekStart={settings.weekStart}
               onSelectTask={(task) => setSelectedTaskDetail(task)}
               onOpenTaskModalWithDate={(dateStr) => {
                 setEditingTask(null);

@@ -4,6 +4,8 @@ import { Task, Project, TaskPriority } from '../../types';
 interface MyTasksViewProps {
   tasks: Task[];
   projects: Project[];
+  defaultView: ViewType;
+  defaultSort: SortType;
   onToggleTask: (taskId: string) => void;
   onOpenTaskModal: () => void;
   onSelectTask: (task: Task) => void;
@@ -20,6 +22,8 @@ type ViewType = 'list' | 'board';
 export const MyTasksView: React.FC<MyTasksViewProps> = ({
   tasks,
   projects,
+  defaultView,
+  defaultSort,
   onToggleTask,
   onOpenTaskModal,
   onSelectTask,
@@ -29,9 +33,9 @@ export const MyTasksView: React.FC<MyTasksViewProps> = ({
 }) => {
   const [activeFilter, setActiveFilter] = useState<FilterType>('all');
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortBy, setSortBy] = useState<SortType>('due');
+  const [sortBy, setSortBy] = useState<SortType>(defaultSort);
   const [groupBy, setGroupBy] = useState<GroupByType>('none');
-  const [viewMode, setViewMode] = useState<ViewType>('list');
+  const [viewMode, setViewMode] = useState<ViewType>(defaultView);
   const [activeMenuId, setActiveMenuId] = useState<string | null>(null);
   const [taskToDelete, setTaskToDelete] = useState<string | null>(null);
 

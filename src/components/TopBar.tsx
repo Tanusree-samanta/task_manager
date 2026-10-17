@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivePage, AppNotification } from '../types';
+import { ActivePage, AppNotification, UserSettings } from '../types';
 import { AVATAR_URL } from './Sidebar';
 
 interface TopBarProps {
@@ -8,6 +8,7 @@ interface TopBarProps {
   onOpenSearch: () => void;
   onOpenAddTask: () => void;
   notifications: AppNotification[];
+  settings: UserSettings;
   onOpenNotifications: () => void;
   onNavigate: (page: ActivePage) => void;
   isSidebarCollapsed: boolean;
@@ -32,6 +33,7 @@ export const TopBar: React.FC<TopBarProps> = ({
   onOpenSearch,
   onOpenAddTask,
   notifications,
+  settings,
   onOpenNotifications,
   onNavigate,
   isSidebarCollapsed,
@@ -111,12 +113,13 @@ export const TopBar: React.FC<TopBarProps> = ({
         <button
           type="button"
           onClick={() => onNavigate('settings')}
-          aria-label="Profile"
+          aria-label={`Profile: ${settings.displayName}, ${settings.email}`}
+          title={`${settings.displayName} · ${settings.email}`}
           className="w-9 h-9 flex items-center justify-center rounded-full cursor-pointer hover:ring-2 hover:ring-[#65513B]/30 transition-all ml-1"
         >
           <img
             src={AVATAR_URL}
-            alt="Alex Chen"
+            alt={settings.displayName || 'Profile avatar'}
             className="w-8 h-8 rounded-full object-cover ring-1 ring-[#E8E4DC]"
           />
         </button>

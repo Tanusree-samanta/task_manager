@@ -1,10 +1,11 @@
 import React from 'react';
-import { ActivePage, Task } from '../types';
+import { ActivePage, Task, UserSettings } from '../types';
 
 interface SidebarProps {
   activePage: ActivePage;
   onNavigate: (page: ActivePage) => void;
   tasks: Task[];
+  settings: UserSettings;
   isMobileOpen: boolean;
   onCloseMobile: () => void;
   isCollapsed: boolean;
@@ -22,6 +23,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   activePage,
   onNavigate,
   tasks,
+  settings,
   isMobileOpen,
   onCloseMobile,
   isCollapsed,
@@ -163,20 +165,20 @@ export const Sidebar: React.FC<SidebarProps> = ({
           className={`flex items-center gap-2.5 p-2 rounded-xl hover:bg-[#F0EBE2] transition-colors cursor-pointer ${
             isCollapsed ? 'justify-center' : ''
           }`}
-          title="Alex Chen (Settings)"
+          title={`${settings.displayName} (Settings)`}
         >
           <img
             src={AVATAR_URL}
-            alt="Alex Chen"
+            alt={settings.displayName || 'Profile avatar'}
             className="w-8 h-8 rounded-full object-cover ring-1 ring-[#E8E4DC]"
           />
           {!isCollapsed && (
             <div className="flex-1 min-w-0">
               <span className="text-[13px] font-semibold text-[#292820] block truncate">
-                Alex Chen
+                {settings.displayName}
               </span>
               <span className="text-[11px] text-[#77766F] block truncate">
-                DevOps Engineer
+                {settings.email}
               </span>
             </div>
           )}

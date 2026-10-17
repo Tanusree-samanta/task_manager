@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { UserSettings } from '../../types';
 import { AVATAR_URL, LOGO_URL } from '../Sidebar';
 
@@ -15,9 +15,19 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   const [email, setEmail] = useState(settings.email);
   const [savedSuccess, setSavedSuccess] = useState(false);
 
+  useEffect(() => {
+    setDisplayName(settings.displayName);
+    setEmail(settings.email);
+  }, [settings.displayName, settings.email]);
+
   const handleProfileSave = (e: React.FormEvent) => {
     e.preventDefault();
-    onUpdateSettings({ displayName, email });
+    const cleanDisplayName = displayName.trim();
+    const cleanEmail = email.trim();
+    if (!cleanDisplayName || !cleanEmail) return;
+    onUpdateSettings({ displayName: cleanDisplayName, email: cleanEmail });
+    setDisplayName(cleanDisplayName);
+    setEmail(cleanEmail);
     setSavedSuccess(true);
     setTimeout(() => setSavedSuccess(false), 2000);
   };
@@ -151,7 +161,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           <div className="flex items-center gap-4">
             <img
               src={AVATAR_URL}
-              alt="Alex Chen"
+              alt={displayName || 'Profile avatar'}
               className="w-14 h-14 rounded-full object-cover ring-2 ring-[#E8E4DC]"
             />
             <div>
@@ -168,6 +178,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               <input
                 type="text"
                 value={displayName}
+                required
+                maxLength={80}
                 onChange={(e) => setDisplayName(e.target.value)}
                 className="w-full h-10 px-3 rounded-xl bg-[#F7F5F0] border border-[#E8E4DC] text-xs text-[#292820] outline-none"
               />
@@ -180,6 +192,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               <input
                 type="email"
                 value={email}
+                required
+                maxLength={254}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full h-10 px-3 rounded-xl bg-[#F7F5F0] border border-[#E8E4DC] text-xs text-[#292820] outline-none"
               />
