@@ -27,7 +27,7 @@ app = FastAPI(
         "Production-ready FastAPI backend for DevOpsForge Task Manager, "
         "backed by PostgreSQL and SQLAlchemy 2.x."
     ),
-    version="2.14.0",
+    version="2.14.1",
     lifespan=lifespan,
     docs_url="/docs",
     redoc_url="/redoc",
@@ -50,7 +50,7 @@ app.include_router(api_router, prefix="/api")
 def root():
     return {
         "app": "DevOpsForge Task Manager API",
-        "version": "2.14.0",
+        "version": "2.14.1",
         "docs": "/docs",
         "health": "/api/health",
     }
